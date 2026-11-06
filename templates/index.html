@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Stack Data Structure Simulator</h1>
+<p><strong>Static preview:</strong> the sample values below do not change.</p>
+<!-- TODO H3: Replace this sample message with Flask flash messages. -->
+<p class="notice" role="status">Preview only. Stack operations will be added during the demo.</p>
+<!-- TODO H4: Replace the sample count with a Jinja variable. -->
+<p>Stack size: <strong>3</strong></p>
+<div class="row simulator">
+  <section class="col-md-4 operations">
+    <h2>Operations</h2>
+    <!-- TODO H5: Connect action to the operate endpoint with url_for and remove onsubmit. -->
+    <form action="{{url_for('operate')}}" method="POST">
+      <label for="st_data">Data (1 to 24 characters)</label>
+      <input id="st_data" name="value" maxlength="24" class="form-control mb-2" autocomplete="off">
+      <div class="d-grid gap-2">
+        <button id="btn_push" name="action" value="push" class="btn btn-success">Push</button>
+        <button id="btn_pop" name="action" value="pop" class="btn btn-danger">Pop</button>
+        <button id="btn_peek" name="action" value="peek" class="btn btn-warning">Peek</button>
+        <button id="btn_clear" name="action" value="clear" class="btn btn-light">Clear</button>
+      </div>
+    </form>
+  </section>
+  <section id="stack" class="col-md-4 stack-area">
+    <h2>Stack data</h2>
+    {% for item in items %}
+      <div class="stack-item {%if loop.first and highlight %} peek {% endif %}">
+        {{item}}{% if loop.first %}<small>TOP</small>{% endif %}
+      </div>
+    {% else %}<p> Stack is empty</p>{% endfor %}
+   
+  </section>
+  <section id="popped" class="col-md-4 popped-area">
+    <h2>Deleted from stack</h2>
+    {% for item in popped %}
+      <div class="stack-item removed">{{ item }}</div>
+    {% else %} <p>No deleted items.</p>
+    {% endfor %}
+
+  </section>
+</div>
+<p class="mt-3">Sample display only. Push, Pop, Peek, and Clear are not connected yet.</p>
+{% endblock %}
